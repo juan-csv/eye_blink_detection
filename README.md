@@ -7,4 +7,4 @@ python3 eye_blink_detection.py
 </code></pre>
 
 
-![alt text](https://github.com/mevo12318/eye_blink_detection/blob/master/results/emotion_detection.gif)
+![alt text](https://github.com/mevo12318/eye_blink_detection/blob/master/results/blink.gif)
