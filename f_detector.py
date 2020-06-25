@@ -13,6 +13,7 @@ class eye_blink_detector():
         self.detector_faces = dlib.get_frontal_face_detector()
         # cargar modelo para deteccion de puntos de ojos
         self.predictor_eyes = dlib.shape_predictor(cfg.eye_landmarks)
+
     def eye_blink(self,gray,rect,COUNTER,TOTAL):
         (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
         (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
@@ -43,6 +44,7 @@ class eye_blink_detector():
             # reset the eye frame counter
             COUNTER = 0
         return COUNTER,TOTAL
+
     def eye_aspect_ratio(self,eye):
         # compute the euclidean distances between the two sets of
         # vertical eye landmarks (x, y)-coordinates
@@ -56,10 +58,14 @@ class eye_blink_detector():
         # return the eye aspect ratio
         return ear
 
-def convert_rectangles2array(rectangles):
+
+
+
+
+def convert_rectangles2array(rectangles,image):
     res = np.array([])
     for box in rectangles:
-        [x0,y0,x1,y1] = box.left(), box.top(), box.right(), box.bottom()
+        [x0,y0,x1,y1] = max(0, box.left()), max(0, box.top()), min(box.right(), image.shape[1]), min(box.bottom(), image.shape[0])
         new_box = np.array([x0,y0,x1,y1])
         if res.size == 0:
             res = np.expand_dims(new_box,axis=0)
